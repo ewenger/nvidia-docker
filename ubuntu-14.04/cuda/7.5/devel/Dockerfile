@@ -38,12 +38,18 @@ RUN mkdir /tmp/gpu-deployment-kit && cd /tmp/gpu-deployment-kit && \
     mv usr/src/gdk/nvml/lib/* /usr/local/cuda/lib64/stubs && \
     rm -rf /tmp/gpu-deployment-kit*
 
-RUN git clone https://ceres-solver.googlesource.com/ceres-solver
-    cd ceres-solver
-    mkdir build
-    cd build
-    cmake ..
-    make -j
+RUN git clone https://ceres-solver.googlesource.com/ceres-solver && \ 
+    cd ceres-solver && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make -j && \
     sudo make install
+    
+RUN cd colmap && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make -j
 
 ENV LIBRARY_PATH /usr/local/cuda/lib64/stubs:${LIBRARY_PATH}
